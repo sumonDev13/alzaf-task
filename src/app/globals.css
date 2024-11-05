@@ -2,20 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body,
+html {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Default styles */
+.custom-container {
+  width: 100%;
+  max-width: 1217px;
+  margin: 0 auto;
+  padding: 0 5px;
+  overflow-x: hidden;
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.hover-svg svg path {
+  transition: 0.1s ease-in-out;
+}
+.hover-svg:hover svg path {
+  fill: #f97316;
+}
+.user-action svg path {
+  transition: 0.1s ease-in-out;
+}
+.user-action:hover svg path {
+  fill: #f97316;
+  fill-opacity: 1;
+  cursor: pointer;
+  stroke-opacity: 1;
+  stroke: white;
 }
