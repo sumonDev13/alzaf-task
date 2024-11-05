@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import { redirect } from 'next/navigation'
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
@@ -24,10 +25,43 @@ const RegistrationPage: React.FC = () => {
     termsAccepted: '',
   });
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your registration logic here
+
+    // Validate password
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password:
+          'Password must be at least 8 characters long and include at least one uppercase letter, one digit, and one special character.',
+      }));
+      return;
+    }
+
+    // Validate password confirmation
+    if (formData.password !== formData.confirmPassword) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: 'Passwords do not match.',
+      }));
+      return;
+    }
+
+    // Clear errors and proceed with registration
+    setErrors({
+      fullName: '',
+      emailOrPhone: '',
+      password: '',
+      confirmPassword: '',
+      birthday: '',
+      gender: '',
+      termsAccepted: '',
+    });
     console.log('Registration form submitted:', formData);
+    // Add your registration logic here
+    redirect('/')
   };
 
   return (
