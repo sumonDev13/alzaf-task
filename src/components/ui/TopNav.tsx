@@ -33,7 +33,7 @@ const TopNav = () => {
                     <Link href=''>Order Track</Link>
                 </li>
                 <li className="flex text-primary hover:text-special duration-100 items-center gap-[4.17px]">
-                    <Link href=''>Sign up / Login</Link>
+                    <Link href='/signup'>Sign up / Login</Link>
                 </li>
             </ul>
         </div>
