@@ -65,7 +65,7 @@ const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-auto bg-gray-100 px-[28rem] py-[4rem]">
       {/* Left Side */}
       <div className="flex-1 bg-white shadow-lg rounded-lg p-8 mr-8">
         <h2 className="text-2xl font-bold mb-6">Create an Account</h2>
