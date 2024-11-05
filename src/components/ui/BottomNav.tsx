@@ -15,7 +15,7 @@ const BottomNav = () => {
       <div className="custom-container flex items-center justify-between">
         {/* Brand Logo */}
         <div>
-          <Link href=''>
+          <Link href="/">
             <Image src={BrandLogo} alt="" />
           </Link>
         </div>
