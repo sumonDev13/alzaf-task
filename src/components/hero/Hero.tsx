@@ -1,8 +1,9 @@
 "use client"
 
+import { useCategories } from "@/lib/api/useCategory";
 import React, { useState } from "react";
 import Slider from "@/utils/slider/Slider";
-import { menus } from "../../utils/categories/Categories"
+// import { menus } from "../../utils/categories/Categories"
 import { CloseIcon, RightIcon } from "../../../public/icons";
 import {IoGridOutline } from 'react-icons/io5';
 import {TbMessage } from 'react-icons/tb'
@@ -23,6 +24,8 @@ const Hero = () => {
   const [subSubMenu, setActiveSubSubMenu] = useState(null);
 
   const [showSideMenu, setShowSideMenu] = useState(false);
+
+  const { menus, loading, error } = useCategories();
   return (
     <section className="bg-[#EDEDED] pb-[70px]">
         <div className="relative md:mt-[12px] ">
