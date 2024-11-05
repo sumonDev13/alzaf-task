@@ -1,5 +1,5 @@
 import Link from "next/link";
-import BrandLogo from "../assets/images/brand-logo.png";
+import BrandLogo from "../../../public/images/brand-logo.png";
 import {
   CloudServiceIcon,
   FavoriteIcon,
