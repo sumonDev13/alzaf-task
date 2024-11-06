@@ -27,7 +27,7 @@ const Hero = () => {
 
   const { menus } = useCategories();
   return (
-    <section className="bg-[#EDEDED] pb-[70px]">
+    <section className="bg-[#EDEDED]">
         <div className="relative md:mt-[12px] ">
       <Slider images={images} />
       <div className=" custom-container w-full top-0 z-[9999]">
