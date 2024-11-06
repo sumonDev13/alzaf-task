@@ -1,10 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { redirect } from 'next/navigation'
-import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import facebook from "../../../public/images/facebook.png";
-import google from "../../../public/images/google.png";
 import Image from 'next/image'
 
 const RegistrationPage: React.FC = () => {
@@ -73,7 +70,7 @@ const RegistrationPage: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-8 p-6 md:p-8">
           {/* Left Side */}
           <div className="flex-1">
-            <h2 className="text-2xl font-bold mb-6">Welcome to Alzaf.com</h2>
+            <h2 className="text-2xl mb-6">Welcome to Alzaf.com</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
@@ -82,6 +79,7 @@ const RegistrationPage: React.FC = () => {
                 <input
                   id="fullName"
                   name="fullName"
+                  placeholder='Full Name'
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -93,11 +91,12 @@ const RegistrationPage: React.FC = () => {
 
               <div>
                 <label htmlFor="emailOrPhone" className="block text-sm font-medium text-gray-700">
-                  Email or Phone
+                  Phone Number or Email
                 </label>
                 <input
                   id="emailOrPhone"
                   name="emailOrPhone"
+                  placeholder='Phone or Email'
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -115,6 +114,7 @@ const RegistrationPage: React.FC = () => {
                   <input
                     id="password"
                     name="password"
+                    placeholder='Password'
                     type={showPassword ? 'text' : 'password'}
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -142,6 +142,7 @@ const RegistrationPage: React.FC = () => {
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
+                  placeholder='Confirm Password'
                   type="password"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
