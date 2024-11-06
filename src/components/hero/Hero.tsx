@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useCategories } from "@/lib/api/useCategory";
 import React, { useState } from "react";
 import Slider from "@/utils/slider/Slider";
-// import { menus } from "../../utils/categories/Categories"
-import { CloseIcon, RightIcon } from "../../../public/icons";
+import { RightIcon } from "../../../public/icons";
 import {IoGridOutline } from 'react-icons/io5';
 import {TbMessage } from 'react-icons/tb'
 import {TiHome  } from 'react-icons/ti'
@@ -21,12 +20,12 @@ const images = [
 
 
 const Hero = () => {
-    const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const [subSubMenu, setActiveSubSubMenu] = useState(null);
+  const [activeSubMenu, setActiveSubMenu] = useState<number | null>(null);
+  const [subSubMenu, setActiveSubSubMenu] = useState<number | null>(null);
 
   const [showSideMenu, setShowSideMenu] = useState(false);
 
-  const { menus, loading, error } = useCategories();
+  const { menus } = useCategories();
   return (
     <section className="bg-[#EDEDED] pb-[70px]">
         <div className="relative md:mt-[12px] ">
@@ -39,7 +38,7 @@ const Hero = () => {
             <button onClick={()=> setShowSideMenu(false)} className="cursor-pointer hover:text-special text-gray-500 pb-[10px]"><IoClose size={26} /></button>
           </div>
           {/* Menus have external data and here i actually maping all manus */}
-          {menus.map((menu, index) => (
+          {menus.map((menu, index:number) => (
             <li
               key={index}
               className="hover:text-special flex items-center gap-2 text-secondary cursor-pointer"
@@ -55,7 +54,7 @@ const Hero = () => {
               {/* Every menu is a object, and every have dropdown property in object, so here i actually checking if dropdown have data then submenu will show and work */}
               {activeSubMenu === index && menu.dropdown.length > 0 && (
                 <ul className="w-full absolute top-[159px] border-l-2 duration-300 border-special md:border-none md:top-0 left-[11px] md:left-[95%] bottom-0 max-w-[210px] md:max-w-[230px] bg-white p-[6px] flex flex-col gap-y-3 ">
-                  {menu.dropdown.map((submenu, subIndex) => (
+                  {menu.dropdown.map((submenu, subIndex:number) => (
                     <li
                       key={subIndex}
                       className="hover:text-special flex items-center gap-2 text-secondary cursor-pointer"
@@ -72,7 +71,7 @@ const Hero = () => {
                       {subSubMenu === subIndex &&
                         submenu.dropdown.length > 0 && (
                           <ul className="w-full absolute top-[159px] md:top-0 bottom-0 max-w-[205px] md:max-w-[230px] bg-white p-[6px] flex flex-col gap-y-3 duration-200  left-[12px] border-l-2 border-special md:border-none md:left-[95%] ">
-                            {submenu.dropdown.map((subsubmenu, subsubIndex) => (
+                            {submenu.dropdown.map((subsubmenu, subsubIndex:number) => (
                               <li
                                 key={subsubIndex}
                                 className="hover:text-special flex items-center gap-2 text-secondary cursor-pointer"

@@ -17,6 +17,7 @@ import {
   WomenGirlsFaIcon,
 } from "../../../public/icons";
 
+// Define icon mapping
 const iconMap: { [key: string]: React.ReactNode } = {
   "Women's & Girls Fashion": <WomenGirlsFaIcon />,
   "Health & Beauty": <HealthBeautyIcon />,
@@ -34,27 +35,40 @@ const iconMap: { [key: string]: React.ReactNode } = {
   "Pet Supplies": <PetSupplies />,
 };
 
+const defaultIcon = <AutomobileIcon />;
+
 const transformToMenuItem = (category: Category): MenuItem => {
-  return {
-    icon: iconMap[category.title] || <AutomobileIcon />, // Default icon as fallback
-    name: category.title,
-    dropdown: category.childrens
-      ? category.childrens.map((child) => ({
-          name: child.title,
-          dropdown: child.childrens 
-            ? child.childrens.map((subChild) => ({
-                name: subChild.title,
-                dropdown: subChild.childrens 
-                  ? subChild.childrens.map((grandChild) => ({
-                      name: grandChild.title,
-                      dropdown: [],
-                    }))
-                  : [],
-              }))
-            : [],
-        }))
-      : [],
-  };
+  const createMenuItem = (title: string): MenuItem => ({
+    icon: iconMap[title] || defaultIcon,
+    name: title,
+    dropdown: [],
+  });
+
+  const result: MenuItem = createMenuItem(category.title);
+
+  if (category.childrens) {
+    result.dropdown = category.childrens.map(child => {
+      const childItem = createMenuItem(child.title);
+      
+      if (child.childrens) {
+        childItem.dropdown = child.childrens.map(subChild => {
+          const subChildItem = createMenuItem(subChild.title);
+          
+          if (subChild.childrens) {
+            subChildItem.dropdown = subChild.childrens.map(grandChild => 
+              createMenuItem(grandChild.title)
+            );
+          }
+          
+          return subChildItem;
+        });
+      }
+      
+      return childItem;
+    });
+  }
+
+  return result;
 };
 
 export const useCategories = () => {
