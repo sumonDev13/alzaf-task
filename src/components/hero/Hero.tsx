@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link";
 import { useCategories } from "@/lib/api/useCategory";
 import React, { useState } from "react";
 import Slider from "@/utils/slider/Slider";
@@ -109,10 +110,12 @@ const Hero = () => {
             <MdOutlineShoppingCart size={24} />
             <span>Cart</span>
           </li>
+          <Link href='/auth'>
           <li className="text-[#707070] cursor-pointer hover:text-special duration-100 font-medium flex flex-col items-center">
             <FaRegUser size={22} />
-            <span>Account</span>
+            <span>SignUp</span>
           </li>
+          </Link>
            
         </ul>
       </div>

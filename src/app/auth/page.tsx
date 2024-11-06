@@ -3,6 +3,13 @@ import React, { useState } from 'react';
 import { redirect } from 'next/navigation'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import Image from 'next/image'
+import Link from "next/link";
+import {IoGridOutline } from 'react-icons/io5';
+import {TbMessage } from 'react-icons/tb'
+import {TiHome  } from 'react-icons/ti'
+import {MdOutlineShoppingCart } from 'react-icons/md'
+import {FaRegUser } from 'react-icons/fa'
+
 
 const RegistrationPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +31,8 @@ const RegistrationPage: React.FC = () => {
     gender: '',
     termsAccepted: '',
   });
+
+  const [showSideMenu, setShowSideMenu] = useState(false);
 
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -236,6 +245,35 @@ const RegistrationPage: React.FC = () => {
     </div>
           </div>
         </div>
+      </div>
+      <div className="bg-white md:hidden z-[9999] w-full bottom-0 fixed">
+        <ul className="px-5 py-2 pt-3 mx-auto max-w-[400px] flex items-center justify-between">
+          <li onClick={()=>setShowSideMenu(!showSideMenu)} className={`${showSideMenu ? 'text-special' : 'text-[#707070]'} cursor-pointer hover:text-special duration-100 font-medium flex flex-col items-center`}>
+            <IoGridOutline  size={21} />
+            <span>Categories</span>
+          </li>
+          <li className="text-[#707070] cursor-pointer hover:text-special duration-100 font-medium flex flex-col items-center">
+            <TbMessage size={22} />
+            <span>Message</span>
+          </li>
+          <Link href='/'>
+          <li className="text-[#707070] cursor-pointer hover:text-special duration-100 font-medium flex flex-col items-center">
+            <TiHome size={24} />
+            <span>Home</span>
+          </li>
+          </Link>
+          <li className="text-[#707070] cursor-pointer hover:text-special duration-100 font-medium flex flex-col items-center">
+            <MdOutlineShoppingCart size={24} />
+            <span>Cart</span>
+          </li>
+          <Link href='/auth'>
+          <li className="text-special cursor-pointer hover:text-special duration-100 font-medium flex flex-col items-center">
+            <FaRegUser size={22} />
+            <span>SignUp</span>
+          </li>
+          </Link>
+           
+        </ul>
       </div>
     </div>
   );
