@@ -70,7 +70,7 @@ const RegistrationPage: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-8 p-6 md:p-8">
           {/* Left Side */}
           <div className="flex-1">
-            <h2 className="text-2xl font-bold mb-6">Create an Account</h2>
+            <h2 className="text-2xl font-bold mb-6">Welcome to Alzaf.com</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
@@ -152,7 +152,7 @@ const RegistrationPage: React.FC = () => {
 
           {/* Right Side */}
           <div className="flex-1">
-            <h2 className="text-2xl font-bold mb-6">Additional Information</h2>
+            <h2 className="text-2xl font-bold mb-6 text-right text-special">Login</h2>
             <div className="flex flex-col md:flex-row gap-4 mb-4">
               <div className="flex-1">
                 <label htmlFor="birthday" className="block text-sm font-medium text-gray-700">
@@ -200,7 +200,7 @@ const RegistrationPage: React.FC = () => {
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor="termsAccepted" className="ml-2 block text-sm text-gray-700">
-                I agree to the <a href="#" className="text-blue-600 hover:underline">terms and conditions</a>
+                I agree to the I’d like to receive exclusive offers and promotions via SMS.
               </label>
             </div>
             {errors.termsAccepted && <p className="mt-2 text-sm text-red-600">{errors.termsAccepted}</p>}
@@ -213,16 +213,17 @@ const RegistrationPage: React.FC = () => {
               Sign Up
             </button>
 
-            <div className="flex flex-col md:flex-row items-center justify-center mt-4 space-y-2 md:space-y-0 md:space-x-4">
-              <div className="flex items-center cursor-pointer hover:text-blue-600">
-                <FaFacebookF className="w-6 h-6 text-gray-500 mr-2" />
-                <span>Sign up with Facebook</span>
-              </div>
-              <div className="flex items-center cursor-pointer hover:text-blue-600">
-                <FaGoogle className="w-6 h-6 text-gray-500 mr-2" />
-                <span>Sign up with Google</span>
-              </div>
-            </div>
+      <div className="flex flex-col w-full gap-4 pt-4">
+      <button className="flex items-center justify-center w-full px-4 py-2 border border-special rounded hover:bg-gray-50">
+        <FaFacebookF className="w-5 h-5 text-gray-600 mr-3" />
+        <span className="text-gray-700">Sign up with Facebook</span>
+      </button>
+      
+      <button className="flex items-center justify-center w-full px-4 py-2 border border-special rounded hover:bg-gray-50">
+        <FaGoogle className="w-5 h-5 text-gray-600 mr-3" />
+        <span className="text-gray-700">Sign up with Google</span>
+      </button>
+    </div>
           </div>
         </div>
       </div>
