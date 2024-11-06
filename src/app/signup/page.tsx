@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { redirect } from 'next/navigation'
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import facebook from "../../../public/images/facebook.png";
+import google from "../../../public/images/google.png";
+import Image from 'next/image'
 
 const RegistrationPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -212,15 +215,21 @@ const RegistrationPage: React.FC = () => {
             >
               Sign Up
             </button>
+             {/* OR divider */}
+      <div className="relative flex py-4 items-center">
+        <div className="flex-grow border-t border-gray-300"></div>
+        <span className="flex-shrink mx-4 text-gray-600">OR</span>
+        <div className="flex-grow border-t border-gray-300"></div>
+      </div>
 
       <div className="flex flex-col w-full gap-4 pt-4">
-      <button className="flex items-center justify-center w-full px-4 py-2 border border-special rounded hover:bg-gray-50">
-        <FaFacebookF className="w-5 h-5 text-gray-600 mr-3" />
+      <button className="flex items-center justify-center w-full px-4 py-2 h-[35px] border border-special rounded hover:bg-gray-50">
+        <Image alt='' src='/images/facebook.png' width={24} height={24} className="w-5 h-5 text-gray-600 mr-3" />
         <span className="text-gray-700">Sign up with Facebook</span>
       </button>
       
-      <button className="flex items-center justify-center w-full px-4 py-2 border border-special rounded hover:bg-gray-50">
-        <FaGoogle className="w-5 h-5 text-gray-600 mr-3" />
+      <button className="flex items-center justify-center w-full px-4 py-2 h-[35px] border border-special rounded hover:bg-gray-50">
+        <Image alt='' src='/images/google.png' width={24} height={24} className="w-5 h-5 text-gray-600 mr-3" />
         <span className="text-gray-700">Sign up with Google</span>
       </button>
     </div>
