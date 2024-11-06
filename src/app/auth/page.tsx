@@ -65,9 +65,9 @@ const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-8 p-6 md:p-8">
+    <div className="flex justify-center items-start min-h-screen bg-gray-100 p-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-auto mt-16">
+        <div className="auth-card flex flex-col md:flex-row gap-8 p-6 md:p-8">
           {/* Left Side */}
           <div className="flex-1">
             <h2 className="text-2xl mb-6">Welcome to Alzaf.com</h2>
