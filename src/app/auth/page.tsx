@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { useState } from 'react';
 import { redirect } from 'next/navigation';
 import { InputField } from '@/components/forms/InputField';
@@ -7,7 +7,6 @@ import { SocialButton } from '@/components/buttons/SocialButtons';
 import { BottomNav } from '@/components/ui/MobileMenu';
 import { FormData } from '@/lib/types/form';
 import { FormErrors } from '@/lib/types/form';
-
 
 const RegistrationPage: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -24,21 +23,26 @@ const RegistrationPage: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSideMenu, setShowSideMenu] = useState(false);
 
-  const handleChange = (field: keyof FormData) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  const handleChange =
+    (field: keyof FormData) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const value =
+        e.target.type === 'checkbox'
+          ? (e.target as HTMLInputElement).checked
+          : e.target.value;
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: FormErrors = {};
 
     // Validate password
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(formData.password)) {
-      newErrors.password = 'Password must be at least 8 characters long and include at least one uppercase letter, one digit, and one special character.';
+      newErrors.password =
+        'Password must be at least 8 characters long and include at least one uppercase letter, one digit, and one special character.';
     }
 
     if (formData.password !== formData.confirmPassword) {
@@ -57,7 +61,6 @@ const RegistrationPage: React.FC = () => {
     <div className="flex justify-center items-start min-h-screen bg-gray-100 p-4">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-auto mt-16">
         <div className="auth-card flex flex-col md:flex-row gap-8 p-6 md:p-8">
-          {/* Left Side */}
           <div className="flex-1">
             <h2 className="text-2xl mb-6">Welcome to Alzaf.com</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -67,6 +70,7 @@ const RegistrationPage: React.FC = () => {
                 value={formData.fullName}
                 onChange={handleChange('fullName')}
                 error={errors.fullName}
+                placeholder="Full Name"
                 required
               />
 
@@ -76,6 +80,7 @@ const RegistrationPage: React.FC = () => {
                 value={formData.emailOrPhone}
                 onChange={handleChange('emailOrPhone')}
                 error={errors.emailOrPhone}
+                placeholder="Phone or Email"
                 required
               />
 
@@ -87,6 +92,7 @@ const RegistrationPage: React.FC = () => {
                 error={errors.password}
                 required
                 showPassword={showPassword}
+                placeholder='Please Enter Your Password'
                 onTogglePassword={() => setShowPassword(!showPassword)}
               />
 
@@ -96,16 +102,15 @@ const RegistrationPage: React.FC = () => {
                 type="password"
                 value={formData.confirmPassword}
                 onChange={handleChange('confirmPassword')}
+                placeholder="Confirm Password"
                 error={errors.confirmPassword}
                 required
               />
             </form>
           </div>
-
-          {/* Right Side */}
           <div className="flex-1">
             <h2 className="text-2xl font-bold mb-6 text-right text-special">Login</h2>
-            
+
             <div className="flex flex-col md:flex-row gap-4 mb-4">
               <InputField
                 id="birthday"
@@ -118,7 +123,10 @@ const RegistrationPage: React.FC = () => {
               />
 
               <div className="flex-1">
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="gender"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Gender
                 </label>
                 <select
@@ -134,7 +142,9 @@ const RegistrationPage: React.FC = () => {
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
-                {errors.gender && <p className="mt-2 text-sm text-red-600">{errors.gender}</p>}
+                {errors.gender && (
+                  <p className="mt-2 text-sm text-red-600">{errors.gender}</p>
+                )}
               </div>
             </div>
 
@@ -160,20 +170,20 @@ const RegistrationPage: React.FC = () => {
               Sign Up
             </button>
 
-            <div className="relative flex py-4 items-center">
+            <div className="relative flex py-2 items-center">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="flex-shrink mx-4 text-gray-600">OR</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
             <div className="flex flex-col w-full gap-4 pt-4">
-              <SocialButton 
-                provider="facebook" 
-                onClick={() => console.log('Facebook signup')} 
+              <SocialButton
+                provider="facebook"
+                onClick={() => console.log('Facebook signup')}
               />
-              <SocialButton 
-                provider="google" 
-                onClick={() => console.log('Google signup')} 
+              <SocialButton
+                provider="google"
+                onClick={() => console.log('Google signup')}
               />
             </div>
           </div>
