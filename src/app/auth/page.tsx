@@ -170,13 +170,13 @@ const RegistrationPage: React.FC = () => {
               Sign Up
             </button>
 
-            <div className="relative flex py-2 items-center">
+            <div className="relative flex py-1 items-center">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="flex-shrink mx-4 text-gray-600">OR</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            <div className="flex flex-col w-full gap-4 pt-4">
+            <div className="flex flex-col w-full gap-5 pt-1">
               <SocialButton
                 provider="facebook"
                 onClick={() => console.log('Facebook signup')}
