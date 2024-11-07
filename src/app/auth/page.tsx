@@ -5,29 +5,8 @@ import { InputField } from '@/components/forms/InputField';
 import { PasswordField } from '@/components/forms/PasswordField';
 import { SocialButton } from '@/components/buttons/SocialButtons';
 import { BottomNav } from '@/components/ui/MobileMenu';
+import { FormData,FormErrors } from '@/lib/types/form';
 
-interface FormData {
-  fullName: string;
-  emailOrPhone: string;
-  password: string;
-  confirmPassword: string;
-  birthday: {
-    month: string;
-    day: string;
-    year: string;
-  };
-  gender: string;
-  termsAccepted: boolean;
-}
-
-interface FormErrors {
-  fullName?: string;
-  emailOrPhone?: string;
-  password?: string;
-  confirmPassword?: string;
-  birthday?: string;
-  gender?: string;
-}
 
 const RegistrationPage: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -56,6 +35,9 @@ const RegistrationPage: React.FC = () => {
           ? (e.target as HTMLInputElement).checked
           : e.target.value;
       setFormData((prev) => ({ ...prev, [field]: value }));
+      if (errors[field]) {
+        setErrors(prev => ({ ...prev, [field]: undefined }));
+      }
     };
 
   const handleBirthdayChange = (part: 'month' | 'day' | 'year') => (
@@ -68,40 +50,82 @@ const RegistrationPage: React.FC = () => {
         [part]: e.target.value,
       },
     }));
+
+    if (errors.birthday) {
+      setErrors(prev => ({ ...prev, birthday: undefined }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const validateForm = (): FormErrors => {
     const newErrors: FormErrors = {};
 
-    // Validate password
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(formData.password)) {
-      newErrors.password =
-        'Password must be at least 8 characters long and include at least one uppercase letter, one digit, and one special character.';
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match.';
+    if (!formData.emailOrPhone.trim()) {
+      newErrors.emailOrPhone = 'Email or phone number is required';
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^\d{10,}$/;
+      if (!emailRegex.test(formData.emailOrPhone) && !phoneRegex.test(formData.emailOrPhone)) {
+        newErrors.emailOrPhone = 'Please enter a valid email or phone number';
+      }
+    }
+
+    // Validate password
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else {
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(formData.password)) {
+        newErrors.password =
+          'Password must be at least 8 characters long and include at least one uppercase letter, one digit, and one special character.';
+      }
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     // Validate birthday
     const { month, day, year } = formData.birthday;
     if (!month || !day || !year) {
-      newErrors.birthday = 'Please complete your birthday information.';
+      newErrors.birthday = 'Complete birthday information is required';
     }
 
     // Validate gender
     if (!formData.gender) {
-      newErrors.gender = 'Please select your gender.';
+      newErrors.gender = 'Please select your gender';
     }
 
-    setErrors(newErrors);
+    // Validate terms acceptance
+    if (!formData.termsAccepted) {
+      newErrors.termsAccepted = 'You must accept the terms to continue';
+    }
 
-    if (Object.keys(newErrors).length === 0) {
+    return newErrors;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
       console.log('Registration form submitted:', formData);
       redirect('/');
+    } else {
+      const firstErrorField = Object.keys(validationErrors)[0];
+      const errorElement = document.getElementById(firstErrorField);
+      if (errorElement) {
+        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   };
 
@@ -163,14 +187,16 @@ const RegistrationPage: React.FC = () => {
               <div className="flex space-x-8">
                 <div className="flex-1">
                   <label htmlFor="month" className="block text-gray-600 font-medium mb-2">
-                    Birthday
+                    Birthday<span className="text-red-500">*</span>
                   </label>
                   <div className="flex space-x-2">
                     <select
                       id="month"
                       value={formData.birthday.month}
                       onChange={handleBirthdayChange('month')}
-                      className="px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className={`px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        errors.birthday ? 'border-red-500' : ''
+                      }`}
                     >
                       <option value="">Month</option>
                       <option value="January">January</option>
@@ -189,7 +215,9 @@ const RegistrationPage: React.FC = () => {
                     <select
                       value={formData.birthday.day}
                       onChange={handleBirthdayChange('day')}
-                      className="px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className={`px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        errors.birthday ? 'border-red-500' : ''
+                      }`}
                     >
                       <option value="">Day</option>
                       {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
@@ -201,7 +229,9 @@ const RegistrationPage: React.FC = () => {
                     <select
                       value={formData.birthday.year}
                       onChange={handleBirthdayChange('year')}
-                      className="px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className={`px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        errors.birthday ? 'border-red-500' : ''
+                      }`}
                     >
                       <option value="">Year</option>
                       {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map(
@@ -220,13 +250,15 @@ const RegistrationPage: React.FC = () => {
 
                 <div className="flex-1">
                   <label htmlFor="gender" className="block text-gray-600 font-medium mb-2">
-                    Gender
+                    Gender<span className="text-red-500">*</span>
                   </label>
                   <select
                     id="gender"
                     value={formData.gender}
                     onChange={handleChange('gender')}
-                    className="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className={`w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      errors.gender ? 'border-red-500' : ''
+                    }`}
                   >
                     <option value="">Gender</option>
                     <option value="male">Male</option>
@@ -248,11 +280,17 @@ const RegistrationPage: React.FC = () => {
                 type="checkbox"
                 checked={formData.termsAccepted}
                 onChange={handleChange('termsAccepted')}
-                className="h-4 w-4 border-gray-300 rounded"
+                className={`h-4 w-4 border-gray-300 rounded ${
+                  errors.termsAccepted ? 'border-red-500' : ''
+                }`}
               />
               <label htmlFor="termsAccepted" className="ml-2 block text-sm text-gray-700">
                 I agree to receive exclusive offers and promotions via SMS.
+                <span className="text-red-500">*</span>
               </label>
+              {errors.termsAccepted && (
+                <p className="text-red-500 text-sm ml-2">{errors.termsAccepted}</p>
+              )}
             </div>
 
             <button
