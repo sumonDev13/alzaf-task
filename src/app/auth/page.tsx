@@ -155,7 +155,7 @@ const RegistrationPage: React.FC = () => {
                 type="checkbox"
                 checked={formData.termsAccepted}
                 onChange={handleChange('termsAccepted')}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 border-gray-300 rounded"
               />
               <label htmlFor="termsAccepted" className="ml-2 block text-sm text-gray-700">
                 I agree to receive exclusive offers and promotions via SMS.
@@ -164,7 +164,7 @@ const RegistrationPage: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="h-[40px] w-full bg-special hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md"
               onClick={handleSubmit}
             >
               Sign Up
