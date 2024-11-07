@@ -5,8 +5,29 @@ import { InputField } from '@/components/forms/InputField';
 import { PasswordField } from '@/components/forms/PasswordField';
 import { SocialButton } from '@/components/buttons/SocialButtons';
 import { BottomNav } from '@/components/ui/MobileMenu';
-import { FormData } from '@/lib/types/form';
-import { FormErrors } from '@/lib/types/form';
+
+interface FormData {
+  fullName: string;
+  emailOrPhone: string;
+  password: string;
+  confirmPassword: string;
+  birthday: {
+    month: string;
+    day: string;
+    year: string;
+  };
+  gender: string;
+  termsAccepted: boolean;
+}
+
+interface FormErrors {
+  fullName?: string;
+  emailOrPhone?: string;
+  password?: string;
+  confirmPassword?: string;
+  birthday?: string;
+  gender?: string;
+}
 
 const RegistrationPage: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -14,7 +35,11 @@ const RegistrationPage: React.FC = () => {
     emailOrPhone: '',
     password: '',
     confirmPassword: '',
-    birthday: '',
+    birthday: {
+      month: '',
+      day: '',
+      year: ''
+    },
     gender: '',
     termsAccepted: false,
   });
@@ -24,7 +49,7 @@ const RegistrationPage: React.FC = () => {
   const [showSideMenu, setShowSideMenu] = useState(false);
 
   const handleChange =
-    (field: keyof FormData) =>
+    (field: keyof Omit<FormData, 'birthday'>) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const value =
         e.target.type === 'checkbox'
@@ -32,6 +57,18 @@ const RegistrationPage: React.FC = () => {
           : e.target.value;
       setFormData((prev) => ({ ...prev, [field]: value }));
     };
+
+  const handleBirthdayChange = (part: 'month' | 'day' | 'year') => (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      birthday: {
+        ...prev.birthday,
+        [part]: e.target.value,
+      },
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +84,17 @@ const RegistrationPage: React.FC = () => {
 
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match.';
+    }
+
+    // Validate birthday
+    const { month, day, year } = formData.birthday;
+    if (!month || !day || !year) {
+      newErrors.birthday = 'Please complete your birthday information.';
+    }
+
+    // Validate gender
+    if (!formData.gender) {
+      newErrors.gender = 'Please select your gender.';
     }
 
     setErrors(newErrors);
@@ -112,39 +160,84 @@ const RegistrationPage: React.FC = () => {
             <h2 className="text-2xl font-bold mb-6 text-right text-special">Login</h2>
 
             <div className="flex flex-col md:flex-row gap-4 mb-4">
-              <InputField
-                id="birthday"
-                label="Birthday"
-                type="date"
-                value={formData.birthday}
-                onChange={handleChange('birthday')}
-                error={errors.birthday}
-                required
-              />
+              <div className="flex space-x-8">
+                <div className="flex-1">
+                  <label htmlFor="month" className="block text-gray-600 font-medium mb-2">
+                    Birthday
+                  </label>
+                  <div className="flex space-x-2">
+                    <select
+                      id="month"
+                      value={formData.birthday.month}
+                      onChange={handleBirthdayChange('month')}
+                      className="px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Month</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                    </select>
+                    <select
+                      value={formData.birthday.day}
+                      onChange={handleBirthdayChange('day')}
+                      className="px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Day</option>
+                      {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                        <option key={day} value={day.toString()}>
+                          {day}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={formData.birthday.year}
+                      onChange={handleBirthdayChange('year')}
+                      className="px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Year</option>
+                      {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map(
+                        (year) => (
+                          <option key={year} value={year.toString()}>
+                            {year}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+                  {errors.birthday && (
+                    <p className="text-red-500 text-sm mt-1">{errors.birthday}</p>
+                  )}
+                </div>
 
-              <div className="flex-1">
-                <label
-                  htmlFor="gender"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Gender
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  value={formData.gender}
-                  onChange={handleChange('gender')}
-                >
-                  <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-                {errors.gender && (
-                  <p className="mt-2 text-sm text-red-600">{errors.gender}</p>
-                )}
+                <div className="flex-1">
+                  <label htmlFor="gender" className="block text-gray-600 font-medium mb-2">
+                    Gender
+                  </label>
+                  <select
+                    id="gender"
+                    value={formData.gender}
+                    onChange={handleChange('gender')}
+                    className="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="non-binary">Non-binary</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                  </select>
+                  {errors.gender && (
+                    <p className="text-red-500 text-sm mt-1">{errors.gender}</p>
+                  )}
+                </div>
               </div>
             </div>
 

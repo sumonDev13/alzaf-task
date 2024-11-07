@@ -3,7 +3,11 @@ export interface FormData {
     emailOrPhone: string;
     password: string;
     confirmPassword: string;
-    birthday: string;
+    birthday: {
+      month: string;
+      day: string;
+      year: string;
+    };
     gender: string;
     termsAccepted: boolean;
   }
