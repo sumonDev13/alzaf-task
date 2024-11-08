@@ -183,10 +183,10 @@ const RegistrationPage: React.FC = () => {
           <div className="flex-1">
             <h2 className="text-2xl font-bold mb-6 text-right text-special">Login</h2>
 
-            <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex flex-col md:flex-row gap-4 mb-2">
               <div className="flex space-x-8">
                 <div className="flex-1">
-                  <label htmlFor="month" className="block text-gray-600 font-medium mb-2">
+                  <label htmlFor="month" className="block text-gray-600 font-medium mb-0">
                     Birthday<span className="text-red-500">*</span>
                   </label>
                   <div className="flex space-x-2">
@@ -194,7 +194,7 @@ const RegistrationPage: React.FC = () => {
                       id="month"
                       value={formData.birthday.month}
                       onChange={handleBirthdayChange('month')}
-                      className={`px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      className={`px-2 py-2 h-[36px] border bg-transparent text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                         errors.birthday ? 'border-red-500' : ''
                       }`}
                     >
@@ -215,7 +215,7 @@ const RegistrationPage: React.FC = () => {
                     <select
                       value={formData.birthday.day}
                       onChange={handleBirthdayChange('day')}
-                      className={`px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      className={`px-2 py-2 h-[36px] border bg-transparent text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                         errors.birthday ? 'border-red-500' : ''
                       }`}
                     >
@@ -229,7 +229,7 @@ const RegistrationPage: React.FC = () => {
                     <select
                       value={formData.birthday.year}
                       onChange={handleBirthdayChange('year')}
-                      className={`px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      className={`px-2 py-2 h-[36px] border bg-transparent text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                         errors.birthday ? 'border-red-500' : ''
                       }`}
                     >
@@ -249,14 +249,14 @@ const RegistrationPage: React.FC = () => {
                 </div>
 
                 <div className="flex-1">
-                  <label htmlFor="gender" className="block text-gray-600 font-medium mb-2">
+                  <label htmlFor="gender" className="block text-gray-600 font-medium mb-0">
                     Gender<span className="text-red-500">*</span>
                   </label>
                   <select
                     id="gender"
                     value={formData.gender}
                     onChange={handleChange('gender')}
-                    className={`w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    className={`w-full px-2 py-2 h-[36px] text-gray-400 bg-transparent border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                       errors.gender ? 'border-red-500' : ''
                     }`}
                   >
@@ -295,7 +295,7 @@ const RegistrationPage: React.FC = () => {
 
             <button
               type="submit"
-              className="h-[40px] w-full bg-special hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md"
+              className="h-[40px] w-full bg-special hover:bg-gray-700 text-white font-medium py-2 px-4"
               onClick={handleSubmit}
             >
               Sign Up

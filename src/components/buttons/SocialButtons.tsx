@@ -8,7 +8,7 @@ interface SocialButtonProps {
 export const SocialButton: React.FC<SocialButtonProps> = ({ provider, onClick }) => (
   <button 
     onClick={onClick}
-    className="flex items-center justify-center w-full px-4 py-2 h-[35px] border border-special rounded hover:bg-gray-50"
+    className="flex items-center justify-center w-full px-4 py-2 h-[35px] border border-special hover:bg-gray-50"
   >
     <Image 
       alt={`${provider} logo`} 
