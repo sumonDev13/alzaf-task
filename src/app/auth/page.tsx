@@ -186,7 +186,7 @@ const RegistrationPage: React.FC = () => {
             <div className="flex flex-col md:flex-row gap-4 mb-2">
               <div className="flex space-x-8">
                 <div className="flex-1">
-                  <label htmlFor="month" className="block text-gray-600 font-medium mb-0">
+                  <label htmlFor="month" className="block text-gray-600 font-medium mb-1">
                     Birthday<span className="text-red-500">*</span>
                   </label>
                   <div className="flex space-x-2">
@@ -249,7 +249,7 @@ const RegistrationPage: React.FC = () => {
                 </div>
 
                 <div className="flex-1">
-                  <label htmlFor="gender" className="block text-gray-600 font-medium mb-0">
+                  <label htmlFor="gender" className="block text-gray-600 font-medium mb-1">
                     Gender<span className="text-red-500">*</span>
                   </label>
                   <select
